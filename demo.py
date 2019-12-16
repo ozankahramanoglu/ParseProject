@@ -66,6 +66,9 @@ def categoryByDate(messageArray):
             alldates[date] = appendedMessages
     return alldates
 
+def dummyFunc():
+    return True
+
 
 if __name__ == "__main__":
     newLinesRemoved = removeNewLines("bestDataEver.txt")
