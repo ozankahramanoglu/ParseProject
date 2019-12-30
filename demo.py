@@ -28,10 +28,10 @@ def removeNewLines(fileName):
     stillSameMessage = ''
     for line in File:
         if not re.match("[0-3][0-9].[0-1][0-9].20[0-9][0-9]\\s[0-2][0-9]:[0-5][0-9]\\s-.*.", line):
-            stillSameMessage += line.replace('\n', ' ').replace('-', '').replace(':', '').replace('\\', '').replace('"', '').rstrip('\n')
+            stillSameMessage += line.replace('\n', ' ').replace('-', '').replace(':', '').replace('\\', '').replace('"', '').rstrip('\n').rstrip('\t')
             #stillSameMessage += re.sub(r'[^A-Za-z0-9 -.ğĞüÜİıŞşÖöÇç:,><!+%()[\]{}]+', ' ', line)
         else:
-            allMessages.append(line.replace('\n', ' ').replace('\\', '').replace('"', '').rstrip('\n') + stillSameMessage)
+            allMessages.append(line.replace('\n', ' ').replace('\\', '').replace('"', '').rstrip('\n').rstrip('\t') + stillSameMessage)
             #allMessages.append(re.sub(r'[^A-Za-z0-9 -.ğĞüÜİıŞşÖöÇç:,><!+%()[\]{}]+', ' ', line) + stillSameMessage)
             stillSameMessage = ''
 
@@ -66,18 +66,7 @@ def categoryByDate(messageArray):
             alldates[date] = appendedMessages
     return alldates
 
-def dummyFunc():
-    return True
-
-
-if __name__ == "__main__":
-    newLinesRemoved = removeNewLines("bestDataEver.txt")
-    categorizedByDateList = categoryByDate(newLinesRemoved)
-
-    # for i in categorizedByDateList:
-    #     for k in categorizedByDateList[i]:
-    #         print(k)
-
+def categorizedByDateListJsonOutput():
     f = open("result.json", "a+", encoding="utf8")
     f.writelines("{" + '\n')
     otherCount = 0
@@ -101,3 +90,9 @@ if __name__ == "__main__":
             f.writelines("\t]," + '\n')
     f.writelines("}" + '\n')
     f.close()
+
+
+if __name__ == "__main__":
+    newLinesRemoved = removeNewLines("bestDataEver.txt")
+    categorizedByDateList = categoryByDate(newLinesRemoved)
+    # categorizedByDateListJsonOutput(categorizedByDateList) # Which is not exporting a good json because of encoding :)
